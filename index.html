@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>NeoCité RP — Chargement</title>
+<style>
+@font-face { font-family: Orbitron; src: url(fonts/Orbitron-Variable.ttf); font-weight: 400 900; }
+@font-face { font-family: Rajdhani; src: url(fonts/Rajdhani-SemiBold.ttf); font-weight: 600; }
+@font-face { font-family: Rajdhani; src: url(fonts/Rajdhani-Bold.ttf); font-weight: 700; }
+
+:root {
+  --bg: #05080F;
+  --panel: rgba(14, 22, 38, 0.72);
+  --line: rgba(34, 228, 255, 0.22);
+  --cyan: #22E4FF;
+  --blue: #5A8CFF;
+  --violet: #8B5CFF;
+  --text: #E8F1FF;
+  --muted: #8A9BB8;
+  --success: #3DFFA2;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: var(--text);
+  font-family: Rajdhani, sans-serif; font-weight: 600; -webkit-user-select: none; user-select: none; }
+
+/* ---------- Décor ---------- */
+.sky { position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 55% at 50% 100%, rgba(139,92,255,0.35), rgba(34,228,255,0.08) 50%, transparent 75%),
+              linear-gradient(#05080F 0%, #0B1426 62%, #140F2E 100%); }
+
+.stars { position: absolute; inset: 0 0 45% 0; }
+.stars i { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #9fdcff; opacity: 0;
+  animation: twinkle 6s infinite; }
+@keyframes twinkle { 0%,100% { opacity: 0; } 50% { opacity: .8; } }
+
+.skyline { position: absolute; left: 0; right: 0; bottom: 30vh; height: 34vh; width: 100%; }
+.skyline .win { animation: blink 7s infinite; }
+@keyframes blink { 0%,100% { opacity: .9; } 45% { opacity: .9; } 50% { opacity: .15; } 55% { opacity: .9; } }
+
+.ground { position: absolute; left: 0; right: 0; bottom: 0; height: 30vh; overflow: hidden;
+  perspective: 32vh; perspective-origin: 50% 0; }
+.ground .grid { position: absolute; left: -50%; right: -50%; top: 0; height: 200%;
+  transform-origin: 50% 0; transform: rotateX(62deg);
+  background-image:
+    linear-gradient(rgba(34,228,255,.35) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(34,228,255,.28) 2px, transparent 2px);
+  background-size: 9vh 9vh;
+  animation: run 2.4s linear infinite; }
+@keyframes run { from { background-position: 0 0; } to { background-position: 0 9vh; } }
+.ground::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; z-index: 2;
+  background: linear-gradient(90deg, transparent, var(--cyan), var(--violet), transparent);
+  box-shadow: 0 0 18px var(--cyan); }
+.ground::after { content: ""; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(rgba(5,8,15,0) 0%, rgba(5,8,15,.55) 60%, rgba(5,8,15,.95) 100%); }
+
+.scan { position: absolute; inset: 0; pointer-events: none; opacity: .18;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,.6) 0 1px, transparent 1px 3px); }
+
+/* ---------- Contenu ---------- */
+.ui { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; z-index: 5; }
+
+.brand { margin-top: 9vh; display: flex; align-items: center; gap: 3vh; }
+.logo { width: 21vh; height: 21vh; filter: drop-shadow(0 0 2vh rgba(34,228,255,.45));
+  animation: pulse 4s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { filter: drop-shadow(0 0 1.6vh rgba(34,228,255,.35)); }
+                   50% { filter: drop-shadow(0 0 3.2vh rgba(139,92,255,.6)); } }
+.word h1 { font-family: Orbitron; font-weight: 900; font-size: 12vh; line-height: 1; letter-spacing: .4vh;
+  background: linear-gradient(90deg, var(--cyan), var(--blue) 55%, var(--violet));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 1.4vh rgba(34,228,255,.45)); }
+.word .sub { display: flex; align-items: center; gap: 2vh; margin-top: 1.2vh; }
+.word .rp { font-family: Orbitron; font-weight: 600; font-size: 3vh; letter-spacing: 2vh; color: var(--text); }
+.badge { font-family: Orbitron; font-weight: 800; font-size: 1.9vh; color: var(--cyan);
+  border: 2px solid var(--cyan); border-radius: .6vh; padding: .3vh 1.2vh; box-shadow: 0 0 1.2vh rgba(34,228,255,.4) inset; }
+.tagline { margin-top: 1.4vh; font-size: 2.6vh; color: var(--muted); letter-spacing: .1vh; }
+
+.welcome { margin-top: 4vh; font-family: Orbitron; font-weight: 700; font-size: 2.2vh; letter-spacing: .6vh;
+  color: var(--text); text-transform: uppercase; text-align: center; }
+.welcome b { color: var(--cyan); font-weight: 700; }
+
+.panels { position: absolute; left: 6vw; right: 6vw; bottom: 18.5vh; display: flex; justify-content: space-between;
+  gap: 3vw; align-items: flex-end; }
+.panel { width: 34vw; max-width: 64vh; background: var(--panel); border: 1px solid var(--line); border-radius: 1vh;
+  padding: 2.2vh 2.6vh; position: relative; overflow: hidden;
+  box-shadow: 0 0 4vh rgba(0,0,0,.5); }
+.panel::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(var(--cyan), var(--violet)); box-shadow: 0 0 1vh var(--cyan); }
+.panel h2 { font-family: Orbitron; font-weight: 700; font-size: 1.6vh; letter-spacing: .5vh; color: var(--cyan);
+  text-transform: uppercase; margin-bottom: 1.2vh; }
+.tip { font-size: 2.5vh; line-height: 1.3; min-height: 6.6vh; transition: opacity .5s, transform .5s; }
+.tip.out { opacity: 0; transform: translateY(.8vh); }
+.tip b, .rules b { color: var(--cyan); font-weight: 700; }
+.dots { display: flex; gap: .8vh; margin-top: 1.4vh; }
+.dots i { width: 1.6vh; height: .4vh; border-radius: .2vh; background: rgba(138,155,184,.35); transition: background .4s, width .4s; }
+.dots i.on { background: var(--cyan); width: 3.2vh; box-shadow: 0 0 .8vh var(--cyan); }
+
+.info { display: grid; grid-template-columns: auto 1fr; gap: .8vh 2.4vh; font-size: 2.3vh; }
+.info dt { color: var(--muted); }
+.info dd { color: var(--text); text-align: right; font-family: Orbitron; font-weight: 600; font-size: 1.9vh;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rules { margin-top: 1.6vh; padding-top: 1.4vh; border-top: 1px solid var(--line); list-style: none; font-size: 2.1vh; color: var(--muted); }
+.rules li { padding-left: 2.2vh; position: relative; line-height: 1.5; }
+.rules li::before { content: ""; position: absolute; left: 0; top: 1.15vh; width: .9vh; height: .9vh;
+  border: 2px solid var(--violet); transform: rotate(45deg); }
+
+/* ---------- Progression ---------- */
+.load { position: absolute; left: 6vw; right: 6vw; bottom: 5.5vh; }
+.load .top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.2vh; }
+.status { font-size: 2.6vh; color: var(--text); }
+.status small { display: block; font-size: 1.8vh; color: var(--muted); margin-top: .3vh; max-width: 70vw;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-height: 2.2vh; }
+.pct { font-family: Orbitron; font-weight: 800; font-size: 5vh; line-height: 1; color: var(--cyan);
+  text-shadow: 0 0 1.6vh rgba(34,228,255,.55); }
+.pct span { font-size: 2.4vh; color: var(--muted); text-shadow: none; margin-left: .3vh; }
+.bar { position: relative; height: 1.1vh; background: rgba(28,42,68,.8); border-radius: .6vh; overflow: hidden;
+  border: 1px solid rgba(34,228,255,.18); }
+.bar .fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0%; border-radius: .6vh;
+  background: linear-gradient(90deg, var(--cyan), var(--blue), var(--violet));
+  box-shadow: 0 0 1.6vh rgba(34,228,255,.7); transition: width .25s linear; }
+.bar .fill::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+  background-size: 30% 100%; background-repeat: no-repeat; animation: shine 1.8s linear infinite; }
+@keyframes shine { from { background-position: -40% 0; } to { background-position: 140% 0; } }
+.foot { display: flex; justify-content: space-between; margin-top: 1vh; font-size: 1.7vh; color: var(--muted); letter-spacing: .1vh; }
+.foot b { color: var(--violet); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="sky"></div>
+<div class="stars" id="stars"></div>
+
+<svg class="skyline" viewBox="0 0 1920 340" preserveAspectRatio="none">
+  <path fill="#0D1830" d="M0 340 V250 H60 V190 H110 V230 H160 V140 H210 V210 H250 V110 H300 V250 H360 V170 H410 V220 H470 V130 H510 V90 H540 V130 H580 V240 H640 V180 H700 V240 H760 V258 H840 V236 H920 V262 H1000 V248 H1080 V266 H1150 V242 H1220 V170 H1270 V110 H1320 V220 H1370 V150 H1420 V70 H1450 V40 H1480 V70 H1510 V190 H1560 V130 H1620 V230 H1680 V160 H1730 V110 H1780 V210 H1840 V150 H1920 V340 Z"/>
+  <path fill="#0A1224" d="M0 340 V300 H90 V270 H180 V290 H300 V260 H420 V295 H560 V275 H700 V300 H860 V280 H1060 V300 H1200 V270 H1340 V292 H1500 V262 H1640 V288 H1780 V272 H1920 V340 Z"/>
+  <g fill="#22E4FF">
+    <rect class="win" x="176" y="160" width="6" height="4"/><rect class="win" x="190" y="182" width="6" height="4" style="animation-delay:2s"/>
+    <rect class="win" x="266" y="132" width="6" height="4" style="animation-delay:3.5s"/><rect class="win" x="280" y="170" width="6" height="4"/>
+    <rect class="win" x="486" y="150" width="6" height="4" style="animation-delay:1s"/><rect class="win" x="522" y="110" width="6" height="4" style="animation-delay:5s"/>
+    <rect class="win" x="1286" y="130" width="6" height="4" style="animation-delay:4s"/><rect class="win" x="1300" y="162" width="6" height="4"/>
+    <rect class="win" x="1432" y="90" width="6" height="4" style="animation-delay:2.5s"/><rect class="win" x="1462" y="60" width="6" height="4"/>
+    <rect class="win" x="1440" y="130" width="6" height="4" style="animation-delay:6s"/><rect class="win" x="1696" y="182" width="6" height="4" style="animation-delay:1.5s"/>
+    <rect class="win" x="1746" y="130" width="6" height="4" style="animation-delay:3s"/><rect class="win" x="1856" y="172" width="6" height="4" style="animation-delay:.5s"/>
+  </g>
+  <g fill="#8B5CFF">
+    <rect class="win" x="390" y="190" width="6" height="4" style="animation-delay:4.5s"/><rect class="win" x="1560" y="152" width="6" height="4" style="animation-delay:2s"/>
+    <rect class="win" x="620" y="200" width="6" height="4" style="animation-delay:5.5s"/>
+  </g>
+</svg>
+
+<div class="ground"><div class="grid"></div></div>
+<div class="scan"></div>
+
+<div class="ui">
+  <div class="brand">
+    <img class="logo" src="logo.svg" alt="">
+    <div class="word">
+      <h1>NEOCITÉ</h1>
+      <div class="sub"><span class="rp">ROLEPLAY</span><span class="badge">IA</span></div>
+      <div class="tagline">La première ville DarkRP entièrement codée par une IA</div>
+    </div>
+  </div>
+  <div class="welcome" id="welcome">Connexion à la ville…</div>
+
+  <div class="panels">
+    <div class="panel">
+      <h2>Astuce</h2>
+      <div class="tip" id="tip"></div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="panel">
+      <h2>Serveur</h2>
+      <dl class="info">
+        <dt>Map</dt><dd id="map">—</dd>
+        <dt>Joueurs max</dt><dd id="max">—</dd>
+        <dt>Mode</dt><dd id="mode">DarkRP</dd>
+      </dl>
+      <ul class="rules">
+        <li>Respecte le RP : pas de meurtre sans raison (RDM).</li>
+        <li>Pas de mélange entre jeu et vie réelle (No Meta).</li>
+        <li>Un souci ? Écris <b>@</b> suivi de ton message pour le staff.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="load">
+    <div class="top">
+      <div class="status"><span id="status">Initialisation…</span><small id="file"></small></div>
+      <div class="pct" id="pct">0<span>%</span></div>
+    </div>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <div class="foot"><span id="files">&nbsp;</span><span>Conçu par <b>Claude</b> · NeoCité RP</span></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var TIPS = [
+    "Appuie sur <b>F4</b> pour changer de métier, acheter des armes ou des entités.",
+    "Appuie sur <b>F2</b> sur une porte pour l'acheter et en faire ta maison.",
+    "Tape <b>/advert</b> suivi d'un message pour faire une annonce publique.",
+    "Le <b>Maire</b> peut voter des lois et déclencher un couvre-feu.",
+    "Ton salaire tombe automatiquement toutes les quelques minutes.",
+    "Tape <b>/drop</b> pour lâcher l'arme que tu tiens en main.",
+    "La police peut te mettre en recherche : évite de te faire repérer.",
+    "Tape <b>/give</b> suivi d'un montant pour donner de l'argent au joueur que tu regardes.",
+    "Le serveur entier (HUD, menus, métiers) est développé par une IA."
+  ];
+
+  // Statuts envoyés par GMod -> [texte FR, progression mini %]
+  var STAGES = [
+    [/retrieving server info/i, "Récupération des infos serveur", 4],
+    [/sending client info/i, "Envoi de tes infos", 8],
+    [/workshop initialized/i, "Initialisation du Workshop", 12],
+    [/mounting addons/i, "Montage des addons", 16],
+    [/(downloading|downloaded).*workshop|workshop.*download/i, "Téléchargement du Workshop", 20],
+    [/workshop complete/i, "Workshop prêt", 60],
+    [/precaching/i, "Préchargement des modèles", 65],
+    [/starting lua/i, "Démarrage des scripts", 72],
+    [/received all lua files/i, "Scripts reçus", 85],
+    [/lua.*(loaded|ready)|client info sent/i, "Préparation de la ville", 92],
+    [/loading resources|loading/i, "Chargement des ressources", 40]
+  ];
+
+  var $ = function (id) { return document.getElementById(id); };
+  var total = 0, needed = 0, target = 2, shown = 0, gotEvent = false;
+
+  // ---- API appelée par Garry's Mod ----
+  window.GameDetails = function (servername, serverurl, mapname, maxplayers, steamid, gamemode) {
+    gotEvent = true;
+    if (mapname) $("map").textContent = mapname;
+    if (maxplayers) $("max").textContent = maxplayers;
+    if (gamemode) $("mode").textContent = gamemode === "darkrp" ? "DarkRP" : gamemode;
+    $("welcome").innerHTML = "Bienvenue dans <b>NeoCité</b>, citoyen";
+  };
+  window.SetFilesTotal = function (n) { gotEvent = true; total = n; updateFiles(); };
+  window.SetFilesNeeded = function (n) { gotEvent = true; needed = n; updateFiles(); };
+  window.DownloadingFile = function (name) {
+    gotEvent = true;
+    $("file").textContent = String(name).replace(/^.*[\\\/]/, "");
+    if (!total) bump(1);
+  };
+  window.SetStatusChanged = function (s) {
+    gotEvent = true;
+    s = String(s || "");
+    for (var i = 0; i < STAGES.length; i++) {
+      if (STAGES[i][0].test(s)) { $("status").textContent = STAGES[i][1]; raise(STAGES[i][2]); return; }
+    }
+    $("status").textContent = s;
+    bump(1);
+  };
+
+  function updateFiles() {
+    if (total <= 0) return;
+    var done = Math.max(0, total - needed);
+    $("files").textContent = done + " / " + total + " fichiers";
+    raise(20 + 40 * done / total); // les téléchargements couvrent 20 % -> 60 %
+  }
+  function raise(p) { if (p > target) target = Math.min(p, 99); }
+  function bump(p) { raise(target + p); }
+
+  // Animation douce de la barre + légère progression quand rien ne se passe
+  setInterval(function () {
+    if (shown < target) shown += Math.max(0.15, (target - shown) * 0.12);
+    else if (shown < 97) shown += 0.02;
+    if (shown > 99) shown = 99;
+    $("fill").style.width = shown.toFixed(2) + "%";
+    $("pct").innerHTML = Math.floor(shown) + "<span>%</span>";
+  }, 50);
+
+  // ---- Astuces ----
+  var dots = $("dots"), ti = Math.floor(Math.random() * TIPS.length);
+  for (var d = 0; d < TIPS.length; d++) dots.appendChild(document.createElement("i"));
+  function showTip() {
+    var el = $("tip");
+    el.className = "tip out";
+    setTimeout(function () {
+      el.innerHTML = TIPS[ti];
+      for (var k = 0; k < dots.children.length; k++) dots.children[k].className = k === ti ? "on" : "";
+      el.className = "tip";
+      ti = (ti + 1) % TIPS.length;
+    }, 450);
+  }
+  showTip(); setInterval(showTip, 7000);
+
+  // ---- Étoiles ----
+  var stars = $("stars");
+  for (var s = 0; s < 70; s++) {
+    var st = document.createElement("i");
+    st.style.left = Math.random() * 100 + "%";
+    st.style.top = Math.random() * 100 + "%";
+    st.style.animationDelay = (Math.random() * 6).toFixed(2) + "s";
+    stars.appendChild(st);
+  }
+
+  // ---- Paramètres d'URL (?map=...) et mode démo hors GMod ----
+  var q = {};
+  location.search.replace(/[?&]([^=&]+)=?([^&]*)/g, function (_, k, v) { q[k] = decodeURIComponent(v); });
+  if (q.map && q.map.indexOf("%") < 0) $("map").textContent = q.map;
+
+  if (q.demo !== undefined) setTimeout(function () {
+    if (gotEvent) return;
+    GameDetails("NeoCité RP", "", q.map || "rp_downtown_tits_v2", 32, "", "darkrp");
+    var steps = ["Retrieving server info", "Sending client info", "Mounting Addons", "Workshop Complete", "Starting Lua...", "Received all Lua files we needed!", "Client info sent!"];
+    var files = ["materials/neocite/logo.png", "resource/fonts/Orbitron-Bold.ttf", "resource/fonts/Rajdhani-Bold.ttf", "materials/neocite/banner.png"];
+    var t = 0;
+    steps.forEach(function (st, i) {
+      setTimeout(function () { SetStatusChanged(st); }, (t += 1800));
+      if (i === 2) {
+        SetFilesTotal(files.length); SetFilesNeeded(files.length);
+        files.forEach(function (f, j) {
+          setTimeout(function () { DownloadingFile(f); SetFilesNeeded(files.length - j - 1); }, (t += 900));
+        });
+      }
+    });
+  }, 800);
+})();
+</script>
+</body>
+</html>

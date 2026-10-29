@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22E4FF"/>
+      <stop offset="0.55" stop-color="#5A8CFF"/>
+      <stop offset="1" stop-color="#8B5CFF"/>
+    </linearGradient>
+    <linearGradient id="tower" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16243D"/>
+      <stop offset="1" stop-color="#0A111F"/>
+    </linearGradient>
+    <radialGradient id="core" cx="0.5" cy="0.55" r="0.55">
+      <stop offset="0" stop-color="#1B2C4F"/>
+      <stop offset="1" stop-color="#070B14"/>
+    </radialGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="hexclip">
+      <polygon points="256,50 434,153 434,359 256,462 78,359 78,153"/>
+    </clipPath>
+  </defs>
+
+  <!-- Coque hexagonale -->
+  <polygon points="256,36 446.5,146 446.5,366 256,476 65.5,366 65.5,146" fill="url(#core)"/>
+  <polygon points="256,36 446.5,146 446.5,366 256,476 65.5,366 65.5,146" fill="none" stroke="url(#neon)" stroke-width="10" stroke-linejoin="round" filter="url(#glow)"/>
+  <polygon points="256,58 427,157 427,355 256,454 85,355 85,157" fill="none" stroke="#22E4FF" stroke-opacity="0.25" stroke-width="2"/>
+
+  <g clip-path="url(#hexclip)">
+    <!-- Grille au sol -->
+    <g stroke="#22E4FF" stroke-opacity="0.18" stroke-width="1.5">
+      <line x1="60" y1="388" x2="452" y2="388"/>
+      <line x1="60" y1="414" x2="452" y2="414"/>
+      <line x1="60" y1="446" x2="452" y2="446"/>
+      <line x1="256" y1="362" x2="256" y2="470"/>
+      <line x1="226" y1="362" x2="170" y2="470"/>
+      <line x1="286" y1="362" x2="342" y2="470"/>
+      <line x1="196" y1="362" x2="84" y2="470"/>
+      <line x1="316" y1="362" x2="428" y2="470"/>
+    </g>
+
+    <!-- Skyline -->
+    <g fill="url(#tower)" stroke="url(#neon)" stroke-width="3" stroke-linejoin="round">
+      <rect x="122" y="250" width="44" height="112"/>
+      <rect x="172" y="186" width="46" height="176"/>
+      <path d="M226 362 V138 L256 112 L286 138 V362 Z"/>
+      <rect x="294" y="206" width="44" height="156"/>
+      <rect x="346" y="266" width="44" height="96"/>
+    </g>
+
+    <!-- Antenne + noeud IA -->
+    <line x1="256" y1="112" x2="256" y2="84" stroke="#22E4FF" stroke-width="3"/>
+    <circle cx="256" cy="78" r="7" fill="#22E4FF" filter="url(#softglow)"/>
+
+    <!-- Fenêtres -->
+    <g fill="#22E4FF" filter="url(#softglow)">
+      <rect x="134" y="270" width="8" height="5"/><rect x="148" y="290" width="8" height="5"/><rect x="134" y="320" width="8" height="5"/>
+      <rect x="184" y="206" width="8" height="5"/><rect x="198" y="236" width="8" height="5"/><rect x="184" y="276" width="8" height="5"/><rect x="198" y="316" width="8" height="5"/>
+      <rect x="306" y="226" width="8" height="5"/><rect x="320" y="266" width="8" height="5"/><rect x="306" y="306" width="8" height="5"/>
+      <rect x="358" y="286" width="8" height="5"/><rect x="372" y="318" width="8" height="5"/>
+    </g>
+
+    <!-- Tour centrale : circuit "N" -->
+    <g fill="none" stroke="#E8F1FF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" filter="url(#softglow)">
+      <path d="M240 330 V176 L272 300 V160"/>
+    </g>
+    <circle cx="240" cy="330" r="6" fill="#8B5CFF"/>
+    <circle cx="272" cy="160" r="6" fill="#22E4FF"/>
+
+    <!-- Pistes de circuit -->
+    <g fill="none" stroke="url(#neon)" stroke-width="2.5" stroke-linecap="round">
+      <path d="M144 250 V228 H112"/>
+      <path d="M195 186 V160 H150"/>
+      <path d="M316 206 V170 H362"/>
+      <path d="M368 266 V240 H400"/>
+    </g>
+    <g fill="#22E4FF" filter="url(#softglow)">
+      <circle cx="112" cy="228" r="4.5"/>
+      <circle cx="150" cy="160" r="4.5"/>
+      <circle cx="362" cy="170" r="4.5"/>
+      <circle cx="400" cy="240" r="4.5"/>
+    </g>
+
+    <!-- Ligne d'horizon -->
+    <line x1="92" y1="362" x2="420" y2="362" stroke="url(#neon)" stroke-width="4" filter="url(#glow)"/>
+  </g>
+</svg>
